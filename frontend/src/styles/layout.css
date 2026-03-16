@@ -1,0 +1,28 @@
+.layout-root {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-wrapper {
+    flex: 1;
+    margin-left: 260px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-area {
+    padding: 32px;
+    flex: 1;
+}
+
+@media (max-width: 1024px) {
+    .main-wrapper {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-wrapper {
+        margin-left: 0;
+    }
+}

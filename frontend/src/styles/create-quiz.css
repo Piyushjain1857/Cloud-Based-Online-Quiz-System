@@ -1,0 +1,238 @@
+.create-quiz-page {
+    /* Main container */
+    padding: 24px;
+}
+
+.builder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.breadcrumb {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.breadcrumb span {
+    cursor: pointer;
+}
+
+.breadcrumb span:first-child:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.separator {
+    color: var(--text-light);
+}
+
+.builder-container {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+.builder-left {
+    flex: 1;
+    max-width: 400px;
+    position: sticky;
+    top: 100px;
+}
+
+.builder-right {
+    flex: 2;
+}
+
+.card {
+    padding: 24px;
+}
+
+/* Form Styles */
+.quiz-meta-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: #F9FAFB;
+    transition: var(--transition);
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    background: #fff;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+/* Question Builder */
+.questions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.question-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.q-header {
+    background: #FAFAFA;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.q-header h4 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.q-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.q-actions button:hover {
+    background: #FEE2E2;
+    color: var(--danger);
+}
+
+.q-body {
+    padding: 24px;
+}
+
+.q-input {
+    width: 100%;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 24px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.q-input:focus {
+    border-bottom-color: var(--primary);
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.option-item input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.op-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.remove-op {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+}
+
+.remove-op:hover {
+    color: var(--danger);
+}
+
+.add-op-btn {
+    margin-top: 16px;
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+}
+
+.btn-outline-dashed {
+    background: transparent;
+    border: 2px dashed var(--primary);
+    color: var(--primary);
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px;
+    border-radius: var(--radius-lg);
+}
+
+.btn-outline-dashed:hover {
+    background: var(--primary-light);
+}
+
+@media (max-width: 1024px) {
+    .builder-container {
+        flex-direction: column;
+    }
+
+    .builder-left {
+        max-width: 100%;
+        position: static;
+    }
+}

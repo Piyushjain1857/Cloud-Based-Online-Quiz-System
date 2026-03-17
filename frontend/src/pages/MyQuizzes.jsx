@@ -3,12 +3,13 @@ import axios from 'axios';
 import QuizCard from '../components/QuizCard';
 import { Search, Filter, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/dashboard.css'; // Reuse dashboard styles for consistency
+import { useSearch } from '../context/SearchContext';
+import '../styles/dashboard.css';
 
 const MyQuizzes = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  const { searchQuery, setSearchQuery } = useSearch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,8 +27,8 @@ const MyQuizzes = () => {
   }, []);
 
   const filteredQuizzes = quizzes.filter(quiz => 
-    quiz.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    quiz.subject.toLowerCase().includes(searchTerm.toLowerCase())
+    quiz.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    quiz.subject.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -39,19 +40,8 @@ const MyQuizzes = () => {
             <p>Manage and track the quizzes you've created.</p>
           </div>
           <button 
-            className="action-btn" 
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '0.5rem', 
-              background: '#6366f1', 
-              color: '#fff',
-              padding: '0.75rem 1.5rem',
-              borderRadius: '12px',
-              border: 'none',
-              cursor: 'pointer',
-              fontWeight: '600'
-            }}
+            className="btn btn-primary" 
+            style={{ gap: '0.8rem' }}
             onClick={() => navigate('/create-quiz')}
           >
             <Plus size={20} /> Create New Quiz
@@ -63,40 +53,32 @@ const MyQuizzes = () => {
         margin: '2rem 0', 
         display: 'flex', 
         gap: '1rem',
-        background: 'rgba(255, 255, 255, 0.05)',
+        background: 'var(--bg-card)',
         padding: '1rem',
-        borderRadius: '16px',
-        border: '1px solid rgba(255, 255, 255, 0.1)'
+        borderRadius: 'var(--radius-lg)',
+        border: '1px solid var(--border)',
+        boxShadow: 'var(--shadow-sm)'
       }}>
         <div style={{ position: 'relative', flex: 1 }}>
-          <Search size={20} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+          <Search size={20} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} />
           <input 
             type="text" 
-            placeholder="Search quizzes by title or subject..." 
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Filter your quizzes by title or subject..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             style={{ 
               width: '100%', 
               padding: '0.75rem 1rem 0.75rem 3rem', 
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '10px',
-              color: '#fff',
-              outline: 'none'
+              background: 'var(--bg-main)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-md)',
+              color: 'var(--text-dark)',
+              outline: 'none',
+              fontSize: '1rem'
             }}
           />
         </div>
-        <button style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: '0.5rem', 
-          background: 'transparent', 
-          color: '#fff',
-          padding: '0.75rem 1rem',
-          borderRadius: '10px',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          cursor: 'pointer'
-        }}>
+        <button className="btn btn-secondary" style={{ padding: '0 1.5rem' }}>
           <Filter size={20} /> Filter
         </button>
       </div>
@@ -108,8 +90,21 @@ const MyQuizzes = () => {
           ) : filteredQuizzes.length > 0 ? (
             filteredQuizzes.map(quiz => <QuizCard key={quiz.id} quiz={quiz} />)
           ) : (
-            <div style={{ textAlign: 'center', padding: '4rem', color: '#9ca3af', gridColumn: '1 / -1' }}>
-              <p>No quizzes found matching your search.</p>
+            <div style={{ textAlign: 'center', padding: '5rem 0', color: 'var(--text-muted)', gridColumn: '1 / -1' }}>
+              <div style={{ marginBottom: '1.5rem', opacity: 0.5 }}>
+                <Search size={48} style={{ margin: '0 auto' }} />
+              </div>
+              <h3>No quizzes found</h3>
+              <p>Try adjusting your search terms or create a new quiz.</p>
+              {searchQuery && (
+                <button 
+                   className="btn btn-secondary" 
+                   style={{ marginTop: '1.5rem' }} 
+                   onClick={() => setSearchQuery('')}
+                >
+                  Clear Search
+                </button>
+              )}
             </div>
           )}
         </div>

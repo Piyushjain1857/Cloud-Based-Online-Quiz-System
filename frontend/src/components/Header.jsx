@@ -11,7 +11,13 @@ const Header = () => {
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
+        const currentPath = window.location.pathname;
+        
         setSearchQuery(query);
+        
+        // Prevent redirect to /search if we are on My Quizzes, which handles its own filtering
+        if (currentPath === '/my-quizzes') return;
+
         if (query.trim()) {
             navigate('/search');
         } else {

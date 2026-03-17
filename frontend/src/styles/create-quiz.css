@@ -1,13 +1,15 @@
 .create-quiz-page {
     /* Main container */
-    padding: 24px;
+    padding: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .builder-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .breadcrumb {
@@ -34,7 +36,7 @@
 
 .builder-container {
     display: flex;
-    gap: 32px;
+    gap: 48px;
     align-items: flex-start;
 }
 
@@ -49,22 +51,35 @@
     flex: 2;
 }
 
-.card {
-    padding: 24px;
+.builder-left .card {
+    padding: 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-top: 8px; /* Extra breathing room from header */
 }
 
 /* Form Styles */
-.quiz-meta-form {
+.builder-left .quiz-meta-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 32px; /* Increased gap between form sections */
+    margin-top: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--text-dark);
 }
 
 .form-group input,
@@ -87,7 +102,7 @@
 
 .form-row {
     display: flex;
-    gap: 16px;
+    gap: 24px;
 }
 
 .w-50 {

@@ -17,6 +17,34 @@ users = [
     }
 ]
 
+# Mock Notifications
+notifications = [
+    {
+        'id': '1',
+        'type': 'quiz',
+        'title': 'New Quiz Assigned',
+        'message': 'Advanced Python Concepts quiz has been assigned to you.',
+        'time': '2 hours ago',
+        'read': False
+    },
+    {
+        'id': '2',
+        'type': 'system',
+        'title': 'System Maintenance',
+        'message': 'Cloud Quiz will be down for maintenance on Saturday at 2 AM.',
+        'time': '5 hours ago',
+        'read': False
+    },
+    {
+        'id': '3',
+        'type': 'performance',
+        'title': 'Weekly Performance Out!',
+        'message': 'Your weekly performance report for last week is now available.',
+        'time': '1 day ago',
+        'read': True
+    }
+]
+
 @app.route('/api/auth/signup', methods=['POST'])
 def signup():
     data = request.json
@@ -394,6 +422,49 @@ def create_full_quiz():
         'message': 'Full quiz created successfully',
         'quiz_id': quiz_id
     }), 201
+
+@app.route('/api/search', methods=['GET'])
+def search_quizzes():
+    query = request.args.get('q', '').lower()
+    if not query:
+        return jsonify({'quizzes': []}), 200
+    
+    results = [
+        q for q in upcoming_quizzes
+        if query in q['title'].lower() or query in q['subject'].lower()
+    ]
+    
+    return jsonify({
+        'message': f'Found {len(results)} quizzes.',
+        'quizzes': results
+    }), 200
+
+@app.route('/api/notifications', methods=['GET'])
+def get_notifications():
+    return jsonify({
+        'message': 'Notifications fetched successfully.',
+        'notifications': notifications,
+        'unreadCount': len([n for n in notifications if not n['read']])
+    }), 200
+
+@app.route('/api/notifications/read', methods=['POST'])
+def mark_notifications_read():
+    data = request.json
+    notif_id = data.get('id')
+    
+    if notif_id == 'all':
+        for n in notifications:
+            n['read'] = True
+    else:
+        for n in notifications:
+            if n['id'] == notif_id:
+                n['read'] = True
+                break
+                
+    return jsonify({
+        'message': 'Notifications marked as read.',
+        'unreadCount': len([n for n in notifications if not n['read']])
+    }), 200
 
 if __name__ == '__main__':
     # Run server on port 3000 to match the previous node.js frontend integration

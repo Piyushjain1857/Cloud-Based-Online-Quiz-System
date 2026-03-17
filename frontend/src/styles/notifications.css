@@ -1,0 +1,122 @@
+.notifications-page {
+  padding: 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.notifications-header h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.notif-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.notif-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.notif-card {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  display: flex;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.notif-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px var(--shadow-color);
+  border-color: var(--primary);
+}
+
+.notif-card.unread {
+  border-left: 4px solid var(--primary);
+  background: rgba(79, 70, 229, 0.02);
+}
+
+.notif-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notif-icon-wrapper.quiz { background: rgba(79, 70, 229, 0.1); color: var(--primary); }
+.notif-icon-wrapper.system { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+.notif-icon-wrapper.performance { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+
+.notif-content {
+  flex: 1;
+}
+
+.notif-content h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.25rem;
+}
+
+.notif-content p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.notif-time {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.notif-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--primary);
+  border-radius: 50%;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.empty-notifications {
+  text-align: center;
+  padding: 6rem 2rem;
+  background: var(--bg-card);
+  border-radius: 24px;
+  border: 2px dashed var(--border);
+}
+
+@media (max-width: 768px) {
+  .notifications-page {
+    padding: 1.5rem;
+  }
+  .notifications-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+}

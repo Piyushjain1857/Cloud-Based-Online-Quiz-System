@@ -1,20 +1,41 @@
 import { Search, Bell, Plus } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSearch } from '../context/SearchContext';
+import { useNotifications } from '../context/NotificationContext';
 import '../styles/header.css';
 
 const Header = () => {
+    const { searchQuery, setSearchQuery } = useSearch();
+    const { unreadCount } = useNotifications();
+    const navigate = useNavigate();
+
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        if (query.trim()) {
+            navigate('/search');
+        } else {
+            navigate('/dashboard');
+        }
+    };
+
     return (
         <header className="top-header">
             <div className="search-bar">
                 <Search size={18} className="search-icon" />
-                <input type="text" placeholder="Search quizzes, subjects, or students..." />
+                <input 
+                    type="text" 
+                    placeholder="Search quizzes, subjects, or students..." 
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
             </div>
             
             <div className="header-actions">
-                <button className="icon-btn">
+                <Link to="/notifications" className="icon-btn">
                     <Bell size={20} />
-                    <span className="badge">3</span>
-                </button>
+                    {unreadCount > 0 && <span className="badge">{unreadCount}</span>}
+                </Link>
                 <Link to="/create-quiz" className="btn btn-primary" style={{ textDecoration: 'none' }}>
                     <Plus size={18} /> Create New Quiz
                 </Link>

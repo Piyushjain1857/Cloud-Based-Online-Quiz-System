@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Cloud Quiz</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Dashboard Styles -->
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-cloud"></i>
+                <span>Cloud Quiz</span>
+            </div>
+        </div>
+
+        <ul class="nav-links">
+            <li class="active"><a href="#"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="#"><i class="fas fa-plus-circle"></i> <span>Create Quiz</span></a></li>
+            <li><a href="#"><i class="fas fa-list"></i> <span>My Quizzes</span></a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> <span>Analytics</span></a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=User&background=4F46E5&color=fff" alt="User Avatar"
+                    class="avatar" id="user-avatar">
+                <div class="user-info">
+                    <p class="name" id="user-name">Welcome Back!</p>
+                    <a href="index.html" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="top-header">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search quizzes...">
+            </div>
+
+            <div class="header-actions">
+                <button class="icon-btn"><i class="far fa-bell"></i><span class="badge">3</span></button>
+                <a href="create-quiz.html" class="btn btn-primary" style="text-decoration: none;">
+                    <i class="fas fa-plus"></i> Create New Quiz
+                </a>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-body">
+
+            <section class="welcome-section">
+                <h1>Welcome to your Dashboard 👋</h1>
+                <p>Here's what's happening with your quizzes today.</p>
+            </section>
+
+            <!-- Cards / Stats -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon bg-blue"><i class="fas fa-file-alt"></i></div>
+                    <div class="stat-details">
+                        <p class="stat-title">Total Quizzes</p>
+                        <h3 class="stat-value">24</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-green"><i class="fas fa-users"></i></div>
+                    <div class="stat-details">
+                        <p class="stat-title">Total Participants</p>
+                        <h3 class="stat-value">1,204</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-purple"><i class="fas fa-star"></i></div>
+                    <div class="stat-details">
+                        <p class="stat-title">Avg. Score</p>
+                        <h3 class="stat-value">78%</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upcoming Quizzes Section -->
+            <section class="upcoming-section">
+                <div class="section-header">
+                    <h2>Upcoming Quizzes</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+
+                <div class="quiz-grid" id="upcoming-quizzes-container">
+                    <!-- Skeletons while loading -->
+                    <div class="quiz-card skeleton"></div>
+                    <div class="quiz-card skeleton"></div>
+                    <div class="quiz-card skeleton"></div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

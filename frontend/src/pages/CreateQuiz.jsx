@@ -83,11 +83,17 @@ const CreateQuiz = () => {
     }
 
     setLoading(true);
+    console.log('Publishing quiz:', { ...quizMeta, questions });
     try {
-      await axios.post('http://localhost:3000/api/quizzes/full', {
+      const response = await axios.post('http://localhost:3000/api/quizzes/full', {
         ...quizMeta,
-        questions: questions.map(({ text, options, correctAnswerIndex }) => ({ text, options, correctAnswerIndex }))
+        questions: questions.map(({ text, options, correctAnswerIndex }) => ({ 
+          text, 
+          options, 
+          correctAnswer: correctAnswerIndex 
+        }))
       });
+      console.log('Quiz response:', response.data);
       alert('Quiz Published Successfully!');
       navigate('/dashboard');
     } catch (err) {

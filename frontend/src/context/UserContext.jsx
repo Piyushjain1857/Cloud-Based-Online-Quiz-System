@@ -3,12 +3,31 @@ import axios from 'axios';
 
 const UserContext = createContext();
 
+// Set up global axios interceptor
+axios.interceptors.request.use(config => {
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  if (storedUser?.id) {
+    config.headers['X-User-ID'] = storedUser.id;
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
+
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchUserProfile = async () => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const userId = storedUser?.id;
+
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await axios.get('http://localhost:3000/api/user/profile');
       setUser(response.data.profile);

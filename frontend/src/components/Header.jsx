@@ -2,11 +2,13 @@ import { Search, Bell, Plus } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSearch } from '../context/SearchContext';
 import { useNotifications } from '../context/NotificationContext';
+import { useUser } from '../context/UserContext';
 import '../styles/header.css';
 
 const Header = () => {
     const { searchQuery, setSearchQuery } = useSearch();
     const { unreadCount } = useNotifications();
+    const { user } = useUser();
     const navigate = useNavigate();
 
     const handleSearchChange = (e) => {
@@ -42,9 +44,11 @@ const Header = () => {
                     <Bell size={20} />
                     {unreadCount > 0 && <span className="badge">{unreadCount}</span>}
                 </Link>
-                <Link to="/create-quiz" className="btn btn-primary" style={{ textDecoration: 'none' }}>
-                    <Plus size={18} /> Create New Quiz
-                </Link>
+                {user?.role === 'admin' && (
+                    <Link to="/create-quiz" className="btn btn-primary" style={{ textDecoration: 'none' }}>
+                        <Plus size={18} /> Create New Quiz
+                    </Link>
+                )}
             </div>
         </header>
     );

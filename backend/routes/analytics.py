@@ -1,18 +1,20 @@
 from flask import Blueprint, jsonify
-from core.data import upcoming_quizzes
+from core.models import Quiz
 
 analytics_bp = Blueprint('analytics', __name__)
 
 @analytics_bp.route('/dashboard/stats', methods=['GET'])
 def get_dashboard_stats():
+    quiz_count = Quiz.query.count()
     return jsonify({
-        'total_quizzes': len(upcoming_quizzes) + 21,
+        'total_quizzes': quiz_count,
         'total_participants': '1,204',
         'avg_score': '78%'
     }), 200
 
 @analytics_bp.route('/analytics', methods=['GET'])
 def get_analytics():
+    # Mostly static/mock for now, could be expanded with real results later
     return jsonify({
         'summary': {
             'avg_score': 82,

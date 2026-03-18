@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, X, Loader2 } from 'lucide-react';
 import axios from 'axios';
+import { useUser } from '../context/UserContext';
 import '../styles/auth.css';
 
 const AuthPage = () => {
@@ -9,6 +10,7 @@ const AuthPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const { refreshProfile } = useUser();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -32,7 +34,16 @@ const AuthPage = () => {
         password: formData.password
       });
       setSuccess('Login successful! Redirecting...');
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+      
+      const user = response.data.user;
+      localStorage.setItem('user', JSON.stringify(user));
+      
+      // Set global header immediately
+      axios.defaults.headers.common['X-User-ID'] = user.id;
+      
+      // Refresh context profile
+      await refreshProfile();
+      
       setTimeout(() => navigate('/dashboard'), 1000);
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed. Please check your credentials.');

@@ -4,12 +4,14 @@ import QuizCard from '../components/QuizCard';
 import { Search, Filter, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSearch } from '../context/SearchContext';
+import { useUser } from '../context/UserContext';
 import '../styles/dashboard.css';
 
 const MyQuizzes = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const { searchQuery, setSearchQuery } = useSearch();
+  const { user } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,13 +41,15 @@ const MyQuizzes = () => {
             <h1>My Quizzes</h1>
             <p>Manage and track the quizzes you've created.</p>
           </div>
-          <button 
-            className="btn btn-primary" 
-            style={{ gap: '0.8rem' }}
-            onClick={() => navigate('/create-quiz')}
-          >
-            <Plus size={20} /> Create New Quiz
-          </button>
+          {user?.role === 'admin' && (
+            <button 
+              className="btn btn-primary" 
+              style={{ gap: '0.8rem' }}
+              onClick={() => navigate('/create-quiz')}
+            >
+              <Plus size={20} /> Create New Quiz
+            </button>
+          )}
         </div>
       </section>
 
@@ -95,7 +99,7 @@ const MyQuizzes = () => {
                 <Search size={48} style={{ margin: '0 auto' }} />
               </div>
               <h3>No quizzes found</h3>
-              <p>Try adjusting your search terms or create a new quiz.</p>
+              <p>Try adjusting your search terms{user?.role === 'admin' ? ' or create a new quiz.' : '.'}</p>
               {searchQuery && (
                 <button 
                    className="btn btn-secondary" 

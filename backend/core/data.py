@@ -7,7 +7,24 @@ users = [
         'name': 'Piyush Jain',
         'email': 'piyush@example.com',
         'password': 'password123',
-        'profileImage': None
+        'profileImage': None,
+        'role': 'admin'
+    },
+    {
+        'id': '2',
+        'name': 'Demo User',
+        'email': 'demo@example.com',
+        'password': 'password123',
+        'profileImage': None,
+        'role': 'user'
+    },
+    {
+        'id': '3',
+        'name': 'Guest User',
+        'email': 'guest@example.com',
+        'password': 'password123',
+        'profileImage': None,
+        'role': 'user'
     }
 ]
 

@@ -1,11 +1,34 @@
 import { useState } from 'react';
 import { useNotifications } from '../context/NotificationContext';
-import { Bell, Info, Star, BookOpen, Clock, CheckCircle2, MoreHorizontal } from 'lucide-react';
+import { useUser } from '../context/UserContext';
+import axios from 'axios';
+import { Bell, Info, Star, BookOpen, Clock, CheckCircle2, MoreHorizontal, Send, Megaphone } from 'lucide-react';
 import '../styles/notifications.css';
 
 const Notifications = () => {
-  const { notifications, loading, markAsRead } = useNotifications();
+  const { notifications, loading, markAsRead, refreshNotifications } = useNotifications();
+  const { user } = useUser();
   const [filter, setFilter] = useState('all');
+  const [broadcast, setBroadcast] = useState({ title: '', message: '', type: 'system' });
+  const [broadcasting, setBroadcasting] = useState(false);
+
+  const handleBroadcast = async (e) => {
+    e.preventDefault();
+    if (!broadcast.title || !broadcast.message) return;
+
+    setBroadcasting(true);
+    try {
+      await axios.post('http://localhost:3000/api/notifications/broadcast', broadcast);
+      setBroadcast({ title: '', message: '', type: 'system' });
+      alert('Broadcast sent successfully!');
+      if (refreshNotifications) refreshNotifications();
+    } catch (err) {
+      console.error('Error broadcasting:', err);
+      alert('Failed to send broadcast.');
+    } finally {
+      setBroadcasting(false);
+    }
+  };
 
   const filteredNotifications = notifications.filter(n => {
     if (filter === 'unread') return !n.read;
@@ -46,6 +69,41 @@ const Notifications = () => {
           </button>
         </div>
       </div>
+
+      {user?.role === 'admin' && (
+        <section className="admin-broadcast-section">
+          <form className="broadcast-form" onSubmit={handleBroadcast}>
+            <h2><Megaphone size={20} /> Broadcast Announcement</h2>
+            <div className="broadcast-inputs">
+              <input 
+                type="text" 
+                placeholder="Notification Title" 
+                value={broadcast.title}
+                onChange={(e) => setBroadcast({...broadcast, title: e.target.value})}
+                required
+              />
+              <select 
+                value={broadcast.type}
+                onChange={(e) => setBroadcast({...broadcast, type: e.target.value})}
+              >
+                <option value="system">System Alert</option>
+                <option value="quiz">Quiz Related</option>
+                <option value="performance">Performance Update</option>
+                <option value="general">General Notification</option>
+              </select>
+            </div>
+            <textarea 
+              placeholder="Type your message to all users..." 
+              value={broadcast.message}
+              onChange={(e) => setBroadcast({...broadcast, message: e.target.value})}
+              required
+            />
+            <button type="submit" className="btn btn-primary" disabled={broadcasting} style={{ alignSelf: 'flex-end', gap: '8px' }}>
+              {broadcasting ? 'Sending...' : <><Send size={18} /> Send Broadcast</>}
+            </button>
+          </form>
+        </section>
+      )}
 
       <div className="notif-list">
         {loading ? (

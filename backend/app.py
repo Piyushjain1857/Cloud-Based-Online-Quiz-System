@@ -1,5 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_migrate import Migrate
+from core.models import db
+import os
 
 # Import Blueprints
 from routes.auth import auth_bp
@@ -11,6 +14,25 @@ from routes.notifications import notifications_bp
 app = Flask(__name__)
 # Enable CORS for all routes
 CORS(app)
+
+# Database Configuration
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'projexi.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+migrate = Migrate(app, db)
+
+# Enable WAL mode for SQLite to handle concurrent requests better
+with app.app_context():
+    if 'sqlite' in app.config['SQLALCHEMY_DATABASE_URI']:
+        from sqlalchemy import event
+        @event.listens_for(db.engine, "connect")
+        def set_sqlite_pragma(dbapi_connection, connection_record):
+            cursor = dbapi_connection.cursor()
+            cursor.execute("PRAGMA journal_mode=WAL")
+            cursor.execute("PRAGMA synchronous=NORMAL")
+            cursor.close()
 
 # Register Blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')

@@ -30,11 +30,13 @@ const Sidebar = () => {
             <Home size={20} /> <span>Dashboard</span>
           </NavLink>
         </li>
-        <li>
-          <NavLink to="/create-quiz" className={({ isActive }) => isActive ? 'active' : ''}>
-            <PlusCircle size={20} /> <span>Create Quiz</span>
-          </NavLink>
-        </li>
+        {user?.role === 'admin' && (
+          <li>
+            <NavLink to="/create-quiz" className={({ isActive }) => isActive ? 'active' : ''}>
+              <PlusCircle size={20} /> <span>Create Quiz</span>
+            </NavLink>
+          </li>
+        )}
         <li>
           <NavLink to="/my-quizzes">
             <List size={20} /> <span>My Quizzes</span>

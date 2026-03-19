@@ -27,7 +27,7 @@ Projexi is a full-stack web application designed for creating and managing onlin
 
 2. **Create a virtual environment:**
    ```bash
-   python -m venv venv
+   python3 -m venv venv
    ```
 
 3. **Activate the virtual environment:**
@@ -42,19 +42,19 @@ Projexi is a full-stack web application designed for creating and managing onlin
 
 4. **Install dependencies:**
    ```bash
-   pip install -r requirements.txt
+   pip3 install -r requirements.txt
    ```
 
 5. **Initialize the database (optional, if `projexi.db` doesn't exist):**
    ```bash
-   python seed_db.py
+   python3 seed_db.py
    ```
 
 6. **Start the server:**
    ```bash
-   python app.py
+   python3 app.py
    ```
-   The backend will start at `http://127.0.0.1:5000`.
+   The backend will start at `http://127.0.0.1:3000`.
 
 ---
 
